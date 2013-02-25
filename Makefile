@@ -8,12 +8,13 @@ JAVAC = javac
 JVM = java
 PYTHON = python
 AWK = gawk
+PERL = perl
 
 CPP_EXE = $(GEN)/c++/minimal
 JAVA_CLASS = $(GEN)/java/Minimal.class
 HASKELL_EXE = $(GEN)/haskell/minimal
 
-LANGS = c++ java python haskell scala awk bash
+LANGS = c++ java python haskell scala awk bash perl
 TESTS := $(LANGS:%=test-%) 
 COUNTS := $(LANGS:%=count-%) 
 
@@ -24,6 +25,7 @@ awk_CODE = minimal.awk
 haskell_CODE = minimal.hs
 bash_CODE = minimal.sh
 scala_CODE = minimal.scala
+perl_CODE = minimal.pl
 
 ####### Actual Commands to run the programs #######
 
@@ -34,6 +36,7 @@ python_RUN = $(PYTHON) $(python_CODE)
 awk_RUN = $(AWK) -f $(awk_CODE)
 haskell_RUN = ./$(HASKELL_EXE)
 bash_RUN = ./$(bash_CODE)
+perl_RUN = $(PERL) $(perl_CODE)
 
 ################# Rules #################
 
