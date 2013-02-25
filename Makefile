@@ -10,12 +10,13 @@ PYTHON = python
 AWK = gawk
 PERL = perl
 PHP = php
+RUBY = ruby
 
 CPP_EXE = $(GEN)/c++/minimal
 JAVA_CLASS = $(GEN)/java/Minimal.class
 HASKELL_EXE = $(GEN)/haskell/minimal
 
-LANGS = c++ java python haskell scala awk bash perl php
+LANGS = c++ java python haskell scala awk bash perl php ruby
 TESTS := $(LANGS:%=test-%) 
 COUNTS := $(LANGS:%=count-%) 
 
@@ -28,6 +29,7 @@ bash_CODE = minimal.sh
 scala_CODE = minimal.scala
 perl_CODE = minimal.pl
 php_CODE = minimal.php
+ruby_CODE = minimal.rb
 
 ####### Actual Commands to run the programs #######
 
@@ -40,6 +42,7 @@ haskell_RUN = ./$(HASKELL_EXE)
 bash_RUN = ./$(bash_CODE)
 perl_RUN = $(PERL) $(perl_CODE)
 php_RUN = $(PHP) $(php_CODE)
+ruby_RUN = $(RUBY) $(ruby_CODE)
 
 ################# Rules #################
 
