@@ -2,6 +2,7 @@ import sys
 
 pairs = []
 values = {}
+k = int(sys.argv[1])
 
 for line in sys.stdin:
     f,s = map(int,line.split('|'))
@@ -9,5 +10,5 @@ for line in sys.stdin:
     pairs.append((f,s))
 
 for a,b in pairs:
-    if len(values[b]) > 1:
+    if len(values[b]) >= k:
         print "%d|%d" % (a,b)

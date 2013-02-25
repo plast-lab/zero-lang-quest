@@ -1,6 +1,6 @@
 INPUT = ./input
 OUTPUT = ./output
-GEN = ./build
+GEN = build
 
 GCC = g++
 GHC = ghc
@@ -53,7 +53,7 @@ $(HASKELL_EXE): minimal.hs
 
 $(TESTS): test-% : %
 	@echo "Testing $* version."
-	time -p $($*_RUN) < $(INPUT) | diff $(OUTPUT) -
+	time -p $($*_RUN) 2 < $(INPUT) | diff $(OUTPUT) -
 
 .PHONY: $(LANGS) $(TESTS) clean
 
