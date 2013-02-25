@@ -15,6 +15,15 @@ HASKELL_EXE = $(GEN)/haskell/minimal
 
 LANGS = c++ java python haskell scala awk bash
 TESTS := $(LANGS:%=test-%) 
+COUNTS := $(LANGS:%=count-%) 
+
+c++_CODE = minimal.cpp
+java_CODE = Minimal.java
+python_CODE = minimal.py
+awk_CODE = minimal.awk
+haskell_CODE = minimal.hs
+bash_CODE = minimal.sh
+scala_CODE = minimal.scala
 
 ####### Actual Commands to run the programs #######
 
@@ -52,10 +61,16 @@ $(HASKELL_EXE): minimal.hs
 
 
 $(TESTS): test-% : %
-	@echo "Testing $* version."
+	@echo "Testing $* version:"
 	time -p $($*_RUN) 2 < $(INPUT) | diff $(OUTPUT) -
 
-.PHONY: $(LANGS) $(TESTS) clean
+$(COUNTS): count-% : %
+	@echo -n "Counting $* version: "
+	@cat $($*_CODE) | sed 's/[[:space:]]//g' | wc -c
+
+count: $(COUNTS)
+
+.PHONY: $(LANGS) $(TESTS) $(COUNTS) clean count
 
 clean:
 	rm -rf $(GEN)/
