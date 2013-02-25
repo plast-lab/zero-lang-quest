@@ -7,12 +7,13 @@ GHC = ghc
 JAVAC = javac
 JVM = java
 PYTHON = python
+AWK = gawk
 
 CPP_EXE = $(GEN)/c++/minimal
 JAVA_CLASS = $(GEN)/java/Minimal.class
 HASKELL_EXE = $(GEN)/haskell/minimal
 
-LANGS = c++ java python haskell scala
+LANGS = c++ java python haskell scala awk bash
 TESTS := $(LANGS:%=test-%) 
 
 ####### Actual Commands to run the programs #######
@@ -21,7 +22,9 @@ TESTS := $(LANGS:%=test-%)
 c++_RUN = ./$(CPP_EXE)
 java_RUN = $(JVM) -cp $(dir $(JAVA_CLASS)) $(basename $(notdir $(JAVA_CLASS)))
 python_RUN = $(PYTHON) minimal.py
+awk_RUN = $(AWK) -f minimal.awk
 haskell_RUN = ./$(HASKELL_EXE)
+bash_RUN = ./minimal.sh
 
 ################# Rules #################
 
@@ -29,6 +32,8 @@ haskell_RUN = ./$(HASKELL_EXE)
 c++: $(CPP_EXE)
 java: $(JAVA_CLASS)
 python:
+awk:
+bash:
 haskell: $(HASKELL_EXE)
 
 $(CPP_EXE): minimal.cpp
