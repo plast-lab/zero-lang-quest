@@ -30,10 +30,10 @@ scala_CODE = minimal.scala
 
 c++_RUN = ./$(CPP_EXE)
 java_RUN = $(JVM) -cp $(dir $(JAVA_CLASS)) $(basename $(notdir $(JAVA_CLASS)))
-python_RUN = $(PYTHON) minimal.py
-awk_RUN = $(AWK) -f minimal.awk
+python_RUN = $(PYTHON) $(python_CODE)
+awk_RUN = $(AWK) -f $(awk_CODE)
 haskell_RUN = ./$(HASKELL_EXE)
-bash_RUN = ./minimal.sh
+bash_RUN = ./$(bash_CODE)
 
 ################# Rules #################
 
@@ -45,15 +45,15 @@ awk:
 bash:
 haskell: $(HASKELL_EXE)
 
-$(CPP_EXE): minimal.cpp
+$(CPP_EXE): $(c++_CODE)
 	@mkdir -p $(@D)
 	$(GCC) -o $@ -O2 $<
 
-$(JAVA_CLASS): Minimal.java
+$(JAVA_CLASS): $(java_CODE)
 	@mkdir -p $(@D)
 	$(JAVAC) -d $(@D) $<
 
-$(HASKELL_EXE): minimal.hs
+$(HASKELL_EXE): $(haskell_CODE)
 	@mkdir -p $(@D)
 	$(GHC) -o $@ -odir $(@D) -hidir $(@D) $<
 
