@@ -8,10 +8,10 @@ let main args =
 
     let lkp = 
         p 
-        |> Seq.groupBy (fun (a,b)->b ) 
+        |> Seq.groupBy snd 
         |> Seq.map (fun (a,b) -> (a, (b |> Set.ofSeq |> Set.count)> int args.[0]))
         |> Map.ofSeq 
            
-    p |> List.filter (fun (a,b)->lkp.[b]) |> List.map (fun (a,b) ->printfn "%d|%d" a b)
+    p |> List.iter (fun (a, b) -> if lkp.[b] then printfn "%d|%d" a b)
 
     0
