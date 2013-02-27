@@ -79,7 +79,7 @@ $(TESTS): test-% : %
 	time -p $($*_RUN) 2 < $(INPUT) | diff $(OUTPUT) -
 
 $(COUNTS): count-% : %
-	@printf "%-20s" "Counting $* version: "
+	@printf "Counting %-20s" "$* version: "
 	@cat $($*_CODE) | sed 's/[[:space:]]//g' | wc -c
 
 count: $(COUNTS)
