@@ -7,6 +7,6 @@ while(<STDIN>){
 
 foreach(@pairs){
     if(keys(%{$values{@$_[1]}}) >= $ARGV[0]){
-	print "@$_[0]|@$_[1]\n";
+        print "@$_[0]|@$_[1]\n";
     }
 }
