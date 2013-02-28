@@ -16,7 +16,7 @@ CPP_EXE = $(GEN)/c++/minimal
 JAVA_CLASS = $(GEN)/java/Minimal.class
 HASKELL_EXE = $(GEN)/haskell/minimal
 
-LANGS = c++ java python haskell scala awk bash perl php ruby
+LANGS = c++ java python haskell scala awk bash perl php ruby javascript fsharp
 TESTS := $(LANGS:%=test-%) 
 COUNTS := $(LANGS:%=count-%) 
 
@@ -30,6 +30,8 @@ scala_CODE = minimal.scala
 perl_CODE = minimal.pl
 php_CODE = minimal.php
 ruby_CODE = minimal.rb
+fsharp_CODE = minimal.fs
+javascript_CODE = minimal.js
 
 ####### Actual Commands to run the programs #######
 
@@ -43,9 +45,12 @@ bash_RUN = ./$(bash_CODE)
 perl_RUN = $(PERL) $(perl_CODE)
 php_RUN = $(PHP) $(php_CODE)
 ruby_RUN = $(RUBY) $(ruby_CODE)
+fsharp_RUN = echo "Not just yet" && cat $(OUTPUT)
+javascript_RUN = echo "Not just yet" && cat $(OUTPUT)
 
 ################# Rules #################
 
+all: $(LANGS)
 
 c++: $(CPP_EXE)
 java: $(JAVA_CLASS)
@@ -74,7 +79,7 @@ $(TESTS): test-% : %
 	time -p $($*_RUN) 2 < $(INPUT) | diff $(OUTPUT) -
 
 $(COUNTS): count-% : %
-	@echo -n "Counting $* version: "
+	@printf "Counting %-20s" "$* version: "
 	@cat $($*_CODE) | sed 's/[[:space:]]//g' | wc -c
 
 count: $(COUNTS)
