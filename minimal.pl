@@ -1,12 +1,11 @@
-
+$k = $ARGV[0] - 1;
 while(<STDIN>){
-    @tmp = split('\||\n');
-    push @pairs, [@tmp];
-    $values{$tmp[1]}{$tmp[0]+0} = $tmp[0];
+    ($a,$b) = split('\||\n');
+    push @pairs, [$a,$b];
+    $values{$b+0}{$a+0} = $a;
 }
-
 foreach(@pairs){
-    if(keys(%{$values{@$_[1]}}) >= $ARGV[0]){
-        print "@$_[0]|@$_[1]\n";
+    if(keys(%{$values{@$_[1]}}) > $k){
+	print "@$_[0]|@$_[1]\n";
     }
 }
