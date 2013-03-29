@@ -3,17 +3,12 @@ import Data.Set (Set, union, singleton, size)
 import Data.List.Split
 import System.Environment
 
-parseLine :: String -> (Integer, Integer)
-parseLine = (\[x,y] -> (x,y)) . map (\x -> read x::Integer) . splitOn "|"
+tuplify2 [x,y] = (x,y)
 
-values :: [String] -> Map Integer (Set Integer)
-values = fromListWith union . map ((\(x,y) -> (y, singleton x)) . parseLine)
-
-repeated k m str = (size (m ! key)) >= k
-    where key = (snd . parseLine) str
-
-pipeline k (x:xs) = filter (repeated k m) (x:xs)
-    where m = values (x:xs)
+pipeline k (x:xs) = let parseLine = tuplify2 . map (\x -> read x::Integer) . splitOn "|"
+                        trans = (\(x,y) -> (y, singleton x)) . parseLine
+                        m = (fromListWith union . map trans) (x:xs)
+                    in filter (\z -> (size (m ! (snd . parseLine) z) >= k)) (x:xs)
 
 main = do
   args <- getArgs
