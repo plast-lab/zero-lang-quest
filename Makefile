@@ -11,12 +11,15 @@ AWK = gawk
 PERL = perl
 PHP = php
 RUBY = ruby
+GROOVY = groovy
+GROOVYC = groovyc
 
 CPP_EXE = $(GEN)/c++/minimal
 JAVA_CLASS = $(GEN)/java/Minimal.class
+GROOVY_CLASS = $(GEN)/groovy/Minimal.class
 HASKELL_EXE = $(GEN)/haskell/minimal
 
-LANGS = c++ java python haskell scala awk bash perl php ruby javascript fsharp
+LANGS = c++ java python haskell scala awk bash perl php ruby javascript fsharp groovy
 TESTS := $(LANGS:%=test-%) 
 COUNTS := $(LANGS:%=count-%) 
 
@@ -30,6 +33,7 @@ scala_CODE = minimal.scala
 perl_CODE = minimal.pl
 php_CODE = minimal.php
 ruby_CODE = minimal.rb
+groovy_CODE = Minimal.groovy
 fsharp_CODE = minimal.fs
 javascript_CODE = minimal.js
 
@@ -45,6 +49,7 @@ bash_RUN = ./$(bash_CODE)
 perl_RUN = $(PERL) $(perl_CODE)
 php_RUN = $(PHP) $(php_CODE)
 ruby_RUN = $(RUBY) $(ruby_CODE)
+groovy_RUN = $(GROOVY) -cp $(dir $(GROOVY_CLASS)) $(basename $(notdir $(GROOVY_CLASS)))
 fsharp_RUN = echo "Not just yet" && cat $(OUTPUT)
 javascript_RUN = echo "Not just yet" && cat $(OUTPUT)
 
@@ -54,6 +59,7 @@ all: $(LANGS)
 
 c++: $(CPP_EXE)
 java: $(JAVA_CLASS)
+groovy: $(GROOVY_CLASS)
 python:
 awk:
 bash:
@@ -66,6 +72,10 @@ $(CPP_EXE): $(c++_CODE)
 $(JAVA_CLASS): $(java_CODE)
 	@mkdir -p $(@D)
 	$(JAVAC) -d $(@D) $<
+
+$(GROOVY_CLASS): $(groovy_CODE)
+	@mkdir -p $(@D)
+	$(GROOVYC) -d $(@D) $<
 
 $(HASKELL_EXE): $(haskell_CODE)
 	@mkdir -p $(@D)
