@@ -3,29 +3,46 @@ import java.io.*;
 
 public class Minimal
 {
-   static int parse(String x, int i)
-   { return  Integer.parseInt(x.split("\\|")[i]); }
+   private static class Pair
+   {
+       final int fst;
+       final int snd;
 
-   public static void main(String argv[]) throws IOException {
+       Pair(int fst, int snd) {
+           this.fst = fst;
+           this.snd = snd;
+       }
+
+       public String toString() {
+           return fst + "|" + snd;
+       }
+   }
+
+   public static void main(String argv[]) throws IOException
+   {
       Map<Integer,Set<Integer>> values = new HashMap<>();
-      List<String> pairs = new LinkedList<>();
+      List<Pair> pairs = new ArrayList<>();
+      
       int k = Integer.parseInt(argv[0]);
 
-      BufferedReader cin = new BufferedReader(new InputStreamReader(System.in));
-      String line;
+      try (Scanner stdin = new Scanner(System.in))
+      {
+          while(stdin.hasNextLine()) {
+              String tokens[] = stdin.nextLine().split("\\|");
 
-      while ((line = cin.readLine()) != null) {
-         int i = parse(line, 1);
+              int fst = Integer.parseInt(tokens[0]);
+              int snd = Integer.parseInt(tokens[1]);
 
-         if (!values.containsKey(i))
-            values.put(i, new HashSet<Integer>());
-         values.get(i).add(parse(line, 0));
-         pairs.add(line);
+              if (!values.containsKey(snd))
+                  values.put(snd, new HashSet<Integer>());
+
+              values.get(snd).add(fst);
+              pairs.add(new Pair(fst, snd));
+          }
       }
-      cin.close();
 
-      for (String p : pairs)
-         if (values.get(parse(p,1)).size() >= k)
-            System.out.println(p);
+      for (Pair i : pairs)
+          if (values.get(i.snd).size() >= k)
+              System.out.println(i);
    }
 }
