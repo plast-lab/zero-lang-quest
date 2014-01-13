@@ -13,13 +13,14 @@ PHP = php
 RUBY = ruby
 GROOVY = groovy
 GROOVYC = groovyc
+RACKET = racket
 
 CPP_EXE = $(GEN)/c++/minimal
 JAVA_CLASS = $(GEN)/java/Minimal.class
 GROOVY_CLASS = $(GEN)/groovy/Minimal.class
 HASKELL_EXE = $(GEN)/haskell/minimal
 
-LANGS = c++ java python haskell scala awk bash perl php ruby javascript fsharp groovy
+LANGS = c++ java python haskell scala awk bash perl php ruby javascript fsharp groovy racket
 TESTS := $(LANGS:%=test-%) 
 COUNTS := $(LANGS:%=count-%) 
 
@@ -36,6 +37,7 @@ ruby_CODE = minimal.rb
 groovy_CODE = Minimal.groovy
 fsharp_CODE = minimal.fs
 javascript_CODE = minimal.js
+racket_CODE = minimal.rkt
 
 ####### Actual Commands to run the programs #######
 
@@ -52,6 +54,7 @@ ruby_RUN = $(RUBY) $(ruby_CODE)
 groovy_RUN = $(GROOVY) -cp $(dir $(GROOVY_CLASS)) $(basename $(notdir $(GROOVY_CLASS)))
 fsharp_RUN = echo "Not just yet" && cat $(OUTPUT)
 javascript_RUN = echo "Not just yet" && cat $(OUTPUT)
+racket_RUN = $(RACKET) -t $(racket_CODE)
 
 ################# Rules #################
 
