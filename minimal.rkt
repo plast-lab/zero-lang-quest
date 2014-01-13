@@ -1,5 +1,4 @@
 #lang racket
-(require racket/sequence)
 (let ([lst (sequence->list (sequence-map (λ (x) (string-split x "|")) (in-lines)))] 
       [h (make-hash)])
   (map (λ (x) (if (hash-has-key? h (cadr x) ) 
